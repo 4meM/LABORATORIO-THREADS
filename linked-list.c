@@ -124,16 +124,13 @@ TipoOperacion obtener_operacion_aleatoria() {
     }
 }
 
-// Genera un array con la distribución exacta de operaciones (80-10-10%)
 TipoOperacion* generar_operaciones_exactas(int total_operaciones) {
     TipoOperacion* operaciones = malloc(total_operaciones * sizeof(TipoOperacion));
     
-    // Calcular cantidades exactas
     int num_member = (total_operaciones * PORCENTAJE_MEMBER) / 100;
     int num_insert = (total_operaciones * PORCENTAJE_INSERT) / 100;
     int num_delete = total_operaciones - num_member - num_insert;
     
-    // Llenar el array con las operaciones en orden
     int index = 0;
     for (int i = 0; i < num_member; i++) {
         operaciones[index++] = OPERACION_MEMBER;
@@ -145,7 +142,6 @@ TipoOperacion* generar_operaciones_exactas(int total_operaciones) {
         operaciones[index++] = OPERACION_DELETE;
     }
     
-    // Mezclar aleatoriamente (algoritmo Fisher-Yates)
     for (int i = total_operaciones - 1; i > 0; i--) {
         int j = rand() % (i + 1);
         TipoOperacion temp = operaciones[i];
@@ -172,7 +168,6 @@ void liberar_lista(struct Node* cabeza) {
     }
 }
 
-// Ejecuta una operación sobre la lista
 void ejecutar_operacion(struct Node** cabeza, TipoOperacion tipo_op, int valor) {
     switch (tipo_op) {
         case OPERACION_MEMBER:
@@ -187,7 +182,6 @@ void ejecutar_operacion(struct Node** cabeza, TipoOperacion tipo_op, int valor) 
     }
 }
 
-// Ejecutar cada hilo del benchmark
 void* funcion_hilo_benchmark(void* argumento) {
     ArgumentosHiloBenchmark* args = (ArgumentosHiloBenchmark*)argumento;
     
@@ -200,7 +194,6 @@ void* funcion_hilo_benchmark(void* argumento) {
     return NULL;
 }
 
-// Ejecuta el benchmark con un numero de hilos N
 double ejecutar_benchmark(int numero_hilos) {
     struct Node* cabeza = NULL;
     pthread_t* hilos = malloc(numero_hilos * sizeof(pthread_t));
